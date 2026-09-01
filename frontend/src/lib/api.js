@@ -2,7 +2,13 @@
  * API client for FlockCare backend inference and health checking.
  */
 
-const API_BASE = (import.meta.env.VITE_API_BASE_URL || "https://flockcare.onrender.com").replace(/\/$/, "");
+const isLocal =
+  typeof window !== "undefined" &&
+  (window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1");
+
+const defaultUrl = isLocal ? "http://localhost:8000" : "https://flockcare.onrender.com";
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || defaultUrl).replace(/\/$/, "");
 
 export class AnalysisError extends Error {
   constructor(message, status) {
