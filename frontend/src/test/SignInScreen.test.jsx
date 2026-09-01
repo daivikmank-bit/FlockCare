@@ -94,7 +94,7 @@ describe("SignInScreen Component", () => {
       vi.advanceTimersByTime(500);
     });
 
-    expect(onSignInSuccess).toHaveBeenCalledWith("Sunny Pastures Coop");
+    expect(onSignInSuccess).toHaveBeenCalledWith("Sunny Pastures Coop", true);
     vi.useRealTimers();
   });
 });

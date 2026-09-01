@@ -152,13 +152,22 @@ export default function RecordScreen({
           </div>
         )}
 
-        {/* Guidance card */}
+        {/* Guidance card with photography */}
         <div className="instruction-box">
-          <div className="instruction-header">
-            <h2 className="instruction-title">{t.recordHeading}</h2>
-            <span className="instruction-pill">Acoustic AI</span>
+          <div className="instruction-photo-row">
+            <img
+              src="/images/farmer_holding_hen.png"
+              alt="Farmer inspecting poultry flock"
+              className="instruction-thumb"
+            />
+            <div className="instruction-text-col">
+              <div className="instruction-header">
+                <h2 className="instruction-title">{t.recordHeading}</h2>
+                <span className="instruction-pill">Acoustic AI</span>
+              </div>
+              <p className="instruction-body">{t.recordInstructions}</p>
+            </div>
           </div>
-          <p className="instruction-body">{t.recordInstructions}</p>
           <div className="duration-tip">
             <Info size={14} />
             <span>{t.minDurationNote}</span>

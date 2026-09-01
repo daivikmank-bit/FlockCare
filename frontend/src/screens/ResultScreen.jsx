@@ -168,7 +168,7 @@ export default function ResultScreen({ result, audioBlob, onRecordAgain, t }) {
             </div>
           </div>
 
-          {/* Topic Navigation Section (Hers Reference Multi-Page Layout) */}
+          {/* Topic Navigation Section (Hers Reference Multi-Page Layout with Photography) */}
           <div className="result-topic-section">
             <h3 className="topic-section-heading">Detailed Topic Breakdowns</h3>
             <div className="topic-card-grid">
@@ -179,8 +179,12 @@ export default function ResultScreen({ result, audioBlob, onRecordAgain, t }) {
                 role="button"
                 tabIndex={0}
               >
-                <div className="topic-card-icon-circle">
-                  <Stethoscope size={18} />
+                <div className="topic-card-thumb-wrapper">
+                  <img
+                    src="/images/broiler_coop_flock.png"
+                    alt="Expected Avian Diseases"
+                    className="topic-card-thumb"
+                  />
                 </div>
                 <div className="topic-card-text">
                   <div className="topic-card-title-row">
@@ -228,8 +232,12 @@ export default function ResultScreen({ result, audioBlob, onRecordAgain, t }) {
                 role="button"
                 tabIndex={0}
               >
-                <div className="topic-card-icon-circle">
-                  <Activity size={18} />
+                <div className="topic-card-thumb-wrapper">
+                  <img
+                    src="/images/hero_pasture_flock.jpg"
+                    alt="Biomarkers & SHAP"
+                    className="topic-card-thumb"
+                  />
                 </div>
                 <div className="topic-card-text">
                   <div className="topic-card-title-row">
@@ -254,8 +262,12 @@ export default function ResultScreen({ result, audioBlob, onRecordAgain, t }) {
                 role="button"
                 tabIndex={0}
               >
-                <div className="topic-card-icon-circle">
-                  <ShieldCheck size={18} />
+                <div className="topic-card-thumb-wrapper">
+                  <img
+                    src="/images/vet_biosecurity_inspection.jpg"
+                    alt="Veterinary Care Plan"
+                    className="topic-card-thumb"
+                  />
                 </div>
                 <div className="topic-card-text">
                   <div className="topic-card-title-row">
@@ -325,11 +337,18 @@ export default function ResultScreen({ result, audioBlob, onRecordAgain, t }) {
           {/* 1. TOPIC: EXPECTED AVIAN DISEASES */}
           {currentTopic === "differentials" && (
             <div className="topic-content-body">
-              <div className="topic-intro-banner">
-                <h2 className="topic-page-title">Expected Avian Disease Differential</h2>
-                <p className="topic-page-desc">
-                  Bioacoustic match analysis comparing flock rale patterns against common avian respiratory pathogens.
-                </p>
+              <div className="topic-hero-media-card">
+                <img
+                  src="/images/broiler_coop_flock.png"
+                  alt="Avian respiratory surveillance"
+                  className="topic-hero-img"
+                />
+                <div className="topic-hero-overlay">
+                  <h2 className="topic-hero-title">Expected Avian Disease Differential</h2>
+                  <p className="topic-hero-subtitle">
+                    Bioacoustic match analysis comparing flock rale patterns against common avian respiratory pathogens.
+                  </p>
+                </div>
               </div>
 
               <DiseaseDifferentialCard
@@ -410,11 +429,18 @@ export default function ResultScreen({ result, audioBlob, onRecordAgain, t }) {
           {/* 3. TOPIC: BIOMARKERS & SHAP DECISION FACTORS */}
           {currentTopic === "biomarkers" && (
             <div className="topic-content-body">
-              <div className="topic-intro-banner">
-                <h2 className="topic-page-title">Acoustic Biomarkers & SHAP Factors</h2>
-                <p className="topic-page-desc">
-                  Quantitative bioacoustic metrics and directional SHAP feature importance explaining the neural prediction.
-                </p>
+              <div className="topic-hero-media-card">
+                <img
+                  src="/images/hero_pasture_flock.jpg"
+                  alt="Acoustic biomarkers"
+                  className="topic-hero-img"
+                />
+                <div className="topic-hero-overlay">
+                  <h2 className="topic-hero-title">Acoustic Biomarkers & SHAP Factors</h2>
+                  <p className="topic-hero-subtitle">
+                    Quantitative bioacoustic metrics and directional SHAP feature importance explaining the neural prediction.
+                  </p>
+                </div>
               </div>
 
               <BiomarkerChart
@@ -428,11 +454,18 @@ export default function ResultScreen({ result, audioBlob, onRecordAgain, t }) {
           {/* 4. TOPIC: VETERINARY CARE & BIOSECURITY PLAN */}
           {currentTopic === "vetcare" && (
             <div className="topic-content-body">
-              <div className="topic-intro-banner">
-                <h2 className="topic-page-title">Veterinary Care & Biosecurity Plan</h2>
-                <p className="topic-page-desc">
-                  Recommended flock containment guidelines and direct access to poultry veterinary resources.
-                </p>
+              <div className="topic-hero-media-card">
+                <img
+                  src="/images/vet_biosecurity_inspection.jpg"
+                  alt="Veterinary inspection & isolation"
+                  className="topic-hero-img"
+                />
+                <div className="topic-hero-overlay">
+                  <h2 className="topic-hero-title">Veterinary Care & Biosecurity Plan</h2>
+                  <p className="topic-hero-subtitle">
+                    Recommended flock containment guidelines and direct access to poultry veterinary resources.
+                  </p>
+                </div>
               </div>
 
               {/* Local Vet Search Card */}

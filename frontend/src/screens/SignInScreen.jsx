@@ -35,7 +35,7 @@ export default function SignInScreen({ onSignInSuccess, onBackToLanding, onGuest
     setIsSubmitting(true);
     setTimeout(() => {
       setIsSubmitting(false);
-      onSignInSuccess(nameToUse);
+      onSignInSuccess(nameToUse, rememberMe);
     }, 400);
   }
 
@@ -61,15 +61,24 @@ export default function SignInScreen({ onSignInSuccess, onBackToLanding, onGuest
 
       {/* Main Sign-In / Sign-Up Form */}
       <main className="signin-content">
-        <div className="signin-typography-group">
-          <h1 className="signin-serif-title">
-            {isSignUpMode ? "Create Farm Account" : t.signInTitle}
-          </h1>
-          <p className="signin-serif-subtitle">
-            {isSignUpMode
-              ? "Register your poultry facility for automated acoustic surveillance."
-              : t.signInSubtitle}
-          </p>
+        <div className="signin-photo-header">
+          <div className="signin-thumb-wrapper">
+            <img
+              src="/images/farmer_holding_hen.png"
+              alt="FlockCare poultry wellness"
+              className="signin-thumb-img"
+            />
+          </div>
+          <div className="signin-typography-group">
+            <h1 className="signin-serif-title">
+              {isSignUpMode ? "Create Farm Account" : t.signInTitle}
+            </h1>
+            <p className="signin-serif-subtitle">
+              {isSignUpMode
+                ? "Register your poultry facility for automated acoustic surveillance."
+                : t.signInSubtitle}
+            </p>
+          </div>
         </div>
 
         {formError && (
