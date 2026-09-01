@@ -51,6 +51,18 @@ def _is_allowed_format(content_type: str, filename: str) -> bool:
     return False
 
 
+@app.get("/")
+def root():
+    """Root welcome endpoint with API discovery."""
+    return {
+        "name": "FlockCare API",
+        "version": "0.1.0",
+        "status": "online",
+        "docs_url": "/docs",
+        "health_url": "/health",
+    }
+
+
 @app.get("/health", response_model=HealthResponse)
 def health():
     """Liveness and readiness health check endpoint."""
