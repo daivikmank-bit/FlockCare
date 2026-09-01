@@ -8,7 +8,11 @@ Flags audio recordings whose acoustic characteristics deviate from calibrated co
 import os
 from typing import Any, Dict, Optional, Tuple, Union
 import numpy as np
-import tensorflow as tf
+
+try:
+    import tensorflow as tf
+except ImportError:
+    tf = None
 
 
 def get_gap_layer_name(trained_model: tf.keras.Model) -> str:
@@ -123,7 +127,7 @@ def load_ood_reference(
 
 
 def evaluate_window_ood(
-    embedding_model: tf.keras.Model,
+    embedding_model: Optional[Any],
     ref: Dict[str, np.ndarray],
     threshold: float,
     window_spec: np.ndarray,

@@ -5,23 +5,29 @@ Optimized for high-throughput, low-latency CPU and cloud execution.
 
 import io
 import base64
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, List, Tuple, Optional
 import numpy as np
-import tensorflow as tf
 import librosa
 import matplotlib.cm as cm
 from PIL import Image
+
+try:
+    import tensorflow as tf
+except ImportError:
+    tf = None
 
 # Precomputed 256-level colormap lookup tables for ultra-fast NumPy integer indexing
 _MAGMA_LUT = (cm.magma(np.linspace(0, 1, 256))[:, :3] * 255).astype(np.uint8)
 _TURBO_LUT = (cm.turbo(np.linspace(0, 1, 256)) * 255).astype(np.uint8)
 
-_grad_model: tf.keras.Model = None
+_grad_model = None
 
 
-def get_grad_model(model: tf.keras.Model) -> tf.keras.Model:
+def get_grad_model(model: Optional[Any]) -> Optional[Any]:
     """Builds a cached functional model extracting conv3 feature maps and predictions."""
     global _grad_model
+    if tf is None or model is None:
+        return None
     if _grad_model is None:
         try:
             inp = tf.keras.Input(shape=(128, 216, 1))
@@ -47,7 +53,7 @@ def get_grad_model(model: tf.keras.Model) -> tf.keras.Model:
 
 
 def compute_batch_gradcam_heatmaps(
-    model: tf.keras.Model, specs_batch: np.ndarray, class_id: int = 1
+    model: Optional[Any] = None, specs_batch: np.ndarray = None, class_id: int = 1
 ) -> List[np.ndarray]:
     """
     Vectorized batched computation of Grad-CAM attention heatmaps for N spectrograms.
@@ -56,7 +62,7 @@ def compute_batch_gradcam_heatmaps(
     n_windows = specs_batch.shape[0]
     grad_model = get_grad_model(model)
 
-    if grad_model is None:
+    if grad_model is None or tf is None:
         heatmaps = []
         for i in range(n_windows):
             s = specs_batch[i, :, :, 0]
@@ -95,7 +101,7 @@ def compute_batch_gradcam_heatmaps(
     return heatmaps
 
 
-def compute_gradcam_heatmap(model: tf.keras.Model, spec_batch: np.ndarray, class_id: int = 1) -> np.ndarray:
+def compute_gradcam_heatmap(model: Optional[Any], spec_batch: np.ndarray, class_id: int = 1) -> np.ndarray:
     """Computes Grad-CAM for a single spectrogram (kept for backwards compatibility)."""
     return compute_batch_gradcam_heatmaps(model, spec_batch, class_id=class_id)[0]
 
