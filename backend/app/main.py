@@ -99,6 +99,7 @@ async def analyze(file: UploadFile = File(...)):
     except (AudioTooShortError, InsufficientSignalError) as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
-        # In production, log real traceback server-side without leaking internals to client
+        import traceback
+        traceback.print_exc()
         print(f"Internal analysis error: {e}")
         raise HTTPException(status_code=500, detail="Analysis failed. Please try recording again.")
