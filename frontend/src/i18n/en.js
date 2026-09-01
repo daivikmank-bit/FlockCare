@@ -79,7 +79,7 @@ export default {
 
   // Disclaimer & Errors
   disclaimer: "FlockCare is a bioacoustic AI screening tool designed to augment poultry management. It does not replace formal clinical diagnosis by a licensed veterinarian.",
-  offlineWarning: "Backend server is currently unreachable at localhost:8000.",
+  offlineWarning: "Connecting to AI backend (waking up cloud server, please wait a moment...)",
   micErrorDenied: "Microphone access was denied. Please enable microphone permissions in your browser settings.",
   micErrorNotFound: "No microphone detected on this device.",
   micErrorBusy: "The microphone is in use by another application.",

@@ -37,8 +37,22 @@ export default function App() {
   const t = lang === "hi" ? hiTranslations : enTranslations;
 
   useEffect(() => {
-    // Check API health on startup
-    checkHealth().then((ok) => setIsBackendHealthy(ok));
+    // Check API health on startup, retrying every 3s if free server is waking up
+    let intervalId;
+    const verifyHealth = async () => {
+      const ok = await checkHealth();
+      setIsBackendHealthy(ok);
+      if (ok && intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+
+    verifyHealth();
+    intervalId = setInterval(verifyHealth, 3500);
+
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
   }, []);
 
   const handleToggleLang = (newLang) => {
