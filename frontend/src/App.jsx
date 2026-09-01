@@ -115,7 +115,7 @@ export default function App() {
 
   return (
     <div className="app-viewport">
-      {!isBackendHealthy && (
+      {!isBackendHealthy && screen === SCREENS.RECORD && (
         <div className="offline-banner">
           <AlertCircle size={14} />
           <span>{t.offlineWarning}</span>
