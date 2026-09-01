@@ -44,6 +44,9 @@ data/processed/
 *.npy
 *.h5
 *.tflite
+!ml/saved_models/*.h5
+!ml/saved_models/*.tflite
+!ml/saved_models/*.npz
 
 # IDE & OS
 .DS_Store
