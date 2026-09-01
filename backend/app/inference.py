@@ -15,6 +15,7 @@ from .config import MODEL_PATH, OOD_REF_PATH, MIN_AUDIO_SECONDS
 from .conversion import convert_to_wav_bytes, ConversionError
 from .explainability import (
     compute_gradcam_heatmap,
+    compute_batch_gradcam_heatmaps,
     extract_acoustic_biomarkers,
     generate_spectrogram_and_heatmap_images,
     compute_feature_importance,
@@ -177,7 +178,9 @@ def analyze_audio_bytes(raw_bytes: bytes) -> Dict[str, Any]:
             f"{result['message']} (Caution: Acoustic characteristics suggest unfamiliar microphone or ambient noise)."
         )
 
-    # 7. Explainable AI: Per-window Grad-CAM heatmaps & Biomarkers
+    # 7. Explainable AI: Fast Batched Grad-CAM heatmaps & Single-Pass Biomarkers
+    cam_heatmaps = compute_batch_gradcam_heatmaps(model, specs, class_id=1)
+
     windows_detail = []
     flock_biomarkers_accum = {
         "rale_intensity_pct": [],
@@ -186,12 +189,9 @@ def analyze_audio_bytes(raw_bytes: bytes) -> Dict[str, Any]:
         "event_density_pct": [],
     }
 
-    for idx, (w_audio, spec_2d, w_prob, w_ood, w_is_ood_flag) in enumerate(
-        zip(norm_windows, specs_2d, elevated_probs, window_ood_scores, window_is_ood)
+    for idx, (w_audio, spec_2d, cam_heatmap, w_prob, w_ood, w_is_ood_flag) in enumerate(
+        zip(norm_windows, specs_2d, cam_heatmaps, elevated_probs, window_ood_scores, window_is_ood)
     ):
-        # Grad-CAM heatmap
-        spec_batch = spec_2d[np.newaxis, ..., np.newaxis]
-        cam_heatmap = compute_gradcam_heatmap(model, spec_batch, class_id=1)
         spec_b64, cam_b64 = generate_spectrogram_and_heatmap_images(spec_2d, cam_heatmap)
 
         # Biomarkers
