@@ -46,7 +46,7 @@ export default function SignInScreen({ onSignInSuccess, onBackToLanding, onGuest
 
   return (
     <div className="signin-screen-shell">
-      {/* Top Header with Back Navigation */}
+      {/* Top Header with Back Navigation & Logo */}
       <header className="signin-header">
         <button
           className="back-icon-btn"
@@ -55,7 +55,14 @@ export default function SignInScreen({ onSignInSuccess, onBackToLanding, onGuest
         >
           <ArrowLeft size={18} />
         </button>
-        <span className="serif-brand-sm">flockcare</span>
+        <div className="signin-brand-center">
+          <img
+            src="/images/flockcare_logo.png"
+            alt="FlockCare"
+            className="brand-logo-xs"
+          />
+          <span className="serif-brand-sm">FlockCare</span>
+        </div>
         <div style={{ width: 32 }} /> {/* balance spacer */}
       </header>
 

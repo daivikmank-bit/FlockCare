@@ -49,10 +49,15 @@ export default function LandingScreen({ onGetStarted, onLogIn, t, currentLang, o
 
   return (
     <div className="landing-screen-shell">
-      {/* Top Bar with Lettermark & Language Toggle */}
+      {/* Top Bar with Logo Emblem & Language Toggle */}
       <header className="landing-header">
         <div className="lettermark-brand">
-          <span className="serif-brand">flockcare</span>
+          <img
+            src="/images/flockcare_logo.png"
+            alt="FlockCare Logo"
+            className="brand-logo-img"
+          />
+          <span className="serif-brand">FlockCare</span>
         </div>
         <button
           className="lang-pill-btn"

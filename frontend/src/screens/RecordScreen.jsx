@@ -98,11 +98,16 @@ export default function RecordScreen({
 
   return (
     <div className="card-shell record-screen-shell">
-      {/* Header bar (Editorial Hers style) */}
+      {/* Header bar (Editorial Hers style with Logo) */}
       <header className="app-header">
         <div className="brand-group">
+          <img
+            src="/images/flockcare_logo.png"
+            alt="FlockCare"
+            className="brand-logo-xs"
+          />
           <div className="lettermark-brand-sm">
-            <span className="serif-brand">flockcare</span>
+            <span className="serif-brand">FlockCare</span>
           </div>
           {farmUser && (
             <div className="user-greeting-pill">

@@ -23,7 +23,7 @@ describe("RecordScreen Component", () => {
 
   it("renders idle state with lettermark, user greeting, and instructions", () => {
     render(<RecordScreen {...defaultProps} />);
-    expect(screen.getByText("flockcare")).toBeInTheDocument();
+    expect(screen.getByText("FlockCare")).toBeInTheDocument();
     expect(screen.getByText("Valley Crest Coop")).toBeInTheDocument();
     expect(screen.getByText("Coop Health Screening")).toBeInTheDocument();
     expect(screen.getByText(/Position your device 1–2 meters from the flock/i)).toBeInTheDocument();

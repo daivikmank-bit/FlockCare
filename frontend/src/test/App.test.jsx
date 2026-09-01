@@ -12,7 +12,7 @@ describe("App Screen State Transitions and UI", () => {
 
   it("renders the initial LandingScreen with classic lettermark and hero typography", () => {
     render(<App />);
-    expect(screen.getByText("flockcare")).toBeInTheDocument();
+    expect(screen.getByText("FlockCare")).toBeInTheDocument();
     expect(screen.getByText(/Better care designed just for/i)).toBeInTheDocument();
     expect(screen.getByText("your flock")).toBeInTheDocument();
     expect(screen.getByText("Get started")).toBeInTheDocument();

@@ -31,11 +31,18 @@ export default function VetReportModal({ result, onClose, t }) {
 
         {/* Printable Report Document Body */}
         <div className="printable-report-sheet">
-          {/* Header */}
+          {/* Header with Official Logo */}
           <div className="sheet-header">
-            <div>
-              <h1 className="sheet-brand">FlockCare Avian Health Screening</h1>
-              <p className="sheet-tagline">Coop Bioacoustic Diagnostics & Respiratory Differential Report</p>
+            <div className="sheet-brand-group">
+              <img
+                src="/images/flockcare_logo.png"
+                alt="FlockCare"
+                className="sheet-logo-img"
+              />
+              <div>
+                <h1 className="sheet-brand">FlockCare Avian Health Screening</h1>
+                <p className="sheet-tagline">Coop Bioacoustic Diagnostics & Respiratory Differential Report</p>
+              </div>
             </div>
             <div className="sheet-meta">
               <div><strong>Date:</strong> {now}</div>
