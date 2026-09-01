@@ -1,8 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Mic, Square, Upload, History, AlertTriangle, ShieldCheck, Activity, Info, CheckCircle2 } from "lucide-react";
+import { Mic, Square, Upload, History, AlertTriangle, ShieldCheck, Activity, Info, CheckCircle2, Globe, User, LogOut } from "lucide-react";
 import { CoopRecorder } from "../lib/recorder";
 
-export default function RecordScreen({ onComplete, error, t, currentLang, onToggleLang, history, onClearHistory }) {
+export default function RecordScreen({
+  onComplete,
+  error,
+  t,
+  currentLang,
+  onToggleLang,
+  history,
+  onClearHistory,
+  farmUser,
+  onSignOut,
+}) {
   const [recording, setRecording] = useState(false);
   const [secondsElapsed, setSecondsElapsed] = useState(0);
   const [micError, setMicError] = useState(null);
@@ -87,34 +97,47 @@ export default function RecordScreen({ onComplete, error, t, currentLang, onTogg
   const isMinDurationMet = secondsElapsed >= MIN_SECONDS;
 
   return (
-    <div className="card-shell">
-      {/* Header bar */}
+    <div className="card-shell record-screen-shell">
+      {/* Header bar (Editorial Hers style) */}
       <header className="app-header">
         <div className="brand-group">
-          <div className="brand-icon">🐔</div>
-          <div>
-            <div className="brand-title-row">
-              <h1 className="brand-name">{t.appTitle}</h1>
-              <span className="brand-badge">{t.appBadge}</span>
-            </div>
-            <p className="brand-subtitle">{t.subtitle}</p>
+          <div className="lettermark-brand-sm">
+            <span className="serif-brand">flockcare</span>
           </div>
+          {farmUser && (
+            <div className="user-greeting-pill">
+              <span className="greeting-label">{t.dashboardGreeting}</span>
+              <span className="greeting-name">{farmUser}</span>
+            </div>
+          )}
         </div>
 
         <div className="header-actions">
           <button
-            className="icon-btn"
+            className="icon-pill-btn signout-pill-btn"
+            onClick={onSignOut}
+            title="Log out & Return to Starting Page"
+          >
+            <LogOut size={13} />
+            <span>Log out</span>
+          </button>
+
+          <button
+            className="icon-pill-btn"
             onClick={() => onToggleLang(currentLang === "en" ? "hi" : "en")}
             title="Toggle Language"
           >
-            {currentLang === "en" ? "🇮🇳 हिन्दी" : "🇬🇧 English"}
+            <Globe size={13} />
+            <span>{currentLang === "en" ? "हिन्दी" : "EN"}</span>
           </button>
+
           <button
-            className="icon-btn"
+            className="icon-pill-btn"
             onClick={() => setShowHistory(!showHistory)}
             title={t.historyTitle}
           >
-            <History size={18} />
+            <History size={14} />
+            <span>{history?.length || 0}</span>
           </button>
         </div>
       </header>
@@ -132,8 +155,8 @@ export default function RecordScreen({ onComplete, error, t, currentLang, onTogg
         {/* Guidance card */}
         <div className="instruction-box">
           <div className="instruction-header">
-            <Activity size={18} className="text-primary" />
             <h2 className="instruction-title">{t.recordHeading}</h2>
+            <span className="instruction-pill">Acoustic AI</span>
           </div>
           <p className="instruction-body">{t.recordInstructions}</p>
           <div className="duration-tip">
@@ -159,12 +182,12 @@ export default function RecordScreen({ onComplete, error, t, currentLang, onTogg
           >
             {recording ? (
               <div className="fab-inner-recording">
-                <Square size={32} className="stop-icon" />
+                <Square size={28} className="stop-icon" />
                 <span className="timer-count">{secondsElapsed}s</span>
               </div>
             ) : (
               <div className="fab-inner-idle">
-                <Mic size={44} className="mic-icon" />
+                <Mic size={40} className="mic-icon" />
               </div>
             )}
           </button>
@@ -178,39 +201,42 @@ export default function RecordScreen({ onComplete, error, t, currentLang, onTogg
 
           {recording && (
             <div className="progress-container">
-              <div className="progress-bar-bg">
+              <div className="progress-track">
                 <div
-                  className={`progress-bar-fill ${isRecommendedDuration ? "fill-good" : ""}`}
+                  className={`progress-fill ${isRecommendedDuration ? "fill-optimal" : "fill-recording"}`}
                   style={{ width: `${progressPct}%` }}
                 />
               </div>
-              <div className="progress-labels">
-                <span className={isMinDurationMet ? "text-success font-medium" : "text-muted"}>
-                  {isMinDurationMet ? "✓ 5s Min Met" : "5s Min"}
-                </span>
-                <span className={isRecommendedDuration ? "text-success font-medium" : "text-muted"}>
-                  {isRecommendedDuration ? "✓ Optimal (15–30s)" : "30s Max"}
-                </span>
+              <div className="progress-markers">
+                <span className="marker marker-min">5s</span>
+                <span className="marker marker-optimal">15s</span>
+                <span className="marker marker-max">30s</span>
               </div>
+              {isRecommendedDuration && (
+                <div className="ready-indicator">
+                  <CheckCircle2 size={14} />
+                  <span>Optimal sampling duration reached</span>
+                </div>
+              )}
             </div>
           )}
         </div>
 
-        {/* Alternative file upload */}
+        {/* Alternative file upload trigger */}
         {!recording && (
-          <div className="upload-alternative">
+          <div className="upload-container">
             <input
               type="file"
               ref={fileInputRef}
-              accept="audio/*,.wav,.webm,.ogg,.mp4,.mp3,.m4a"
+              accept="audio/*,.wav,.mp3,.m4a,.ogg,.webm,.flac,.aac"
               style={{ display: "none" }}
               onChange={handleFileSelect}
             />
             <button
-              className="text-link-btn"
+              className="btn-upload"
               onClick={() => fileInputRef.current?.click()}
             >
-              <Upload size={16} />
+              <Upload size={15} />
               <span>{t.uploadFile}</span>
             </button>
           </div>
@@ -219,38 +245,44 @@ export default function RecordScreen({ onComplete, error, t, currentLang, onTogg
 
       {/* History Drawer Modal */}
       {showHistory && (
-        <div className="modal-backdrop" onClick={() => setShowHistory(false)}>
-          <div className="modal-sheet" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-overlay" onClick={() => setShowHistory(false)}>
+          <div className="modal-content history-modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <div className="modal-title-group">
-                <History size={20} />
-                <h3>{t.historyTitle}</h3>
+                <History size={18} />
+                <h3 className="modal-title">{t.historyTitle}</h3>
               </div>
-              <button className="close-btn" onClick={() => setShowHistory(false)}>✕</button>
+              <button
+                className="icon-btn-close"
+                onClick={() => setShowHistory(false)}
+              >
+                ✕
+              </button>
             </div>
 
             <div className="modal-body">
-              {history.length === 0 ? (
-                <div className="history-empty-state">
-                  <p>{t.historyEmpty}</p>
+              {(!history || history.length === 0) ? (
+                <div className="history-empty">
+                  <p className="empty-title">{t.historyEmpty}</p>
+                  <p className="empty-subtitle">{t.historyDeviceOnly}</p>
                 </div>
               ) : (
                 <div className="history-list">
                   {history.map((item, idx) => (
-                    <div key={item.id || idx} className={`history-card risk-${item.risk_level}`}>
+                    <div key={idx} className="history-card">
                       <div className="history-top">
                         <span className={`risk-pill pill-${item.risk_level}`}>
-                          {item.risk_level.toUpperCase()}
+                          {item.risk_level.toUpperCase()} ({item.risk_score}%)
                         </span>
                         <span className="history-date">
-                          {new Date(item.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                          {new Date(item.timestamp).toLocaleDateString()} {new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </span>
                       </div>
                       <p className="history-msg">{item.message}</p>
                       <div className="history-meta">
-                        <span>Risk: {item.risk_score}%</span>
+                        <span>{item.windows_analyzed} Windows</span>
                         <span>•</span>
-                        <span>{item.windows_analyzed} windows</span>
+                        <span>Status: {item.status}</span>
                       </div>
                     </div>
                   ))}
@@ -258,17 +290,19 @@ export default function RecordScreen({ onComplete, error, t, currentLang, onTogg
               )}
             </div>
 
-            {history.length > 0 && (
-              <div className="modal-footer">
-                <span className="history-device-note">{t.historyDeviceOnly}</span>
-                <button className="danger-btn" onClick={onClearHistory}>{t.clearHistory}</button>
-              </div>
-            )}
+            <div className="modal-footer">
+              <span className="history-device-note">{t.historyDeviceOnly}</span>
+              {history && history.length > 0 && (
+                <button className="danger-btn" onClick={onClearHistory}>
+                  {t.clearHistory}
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}
 
-      {/* Footer disclaimer */}
+      {/* Footer info */}
       <footer className="app-footer">
         <ShieldCheck size={14} className="text-muted" />
         <p className="footer-disclaimer">{t.disclaimer}</p>

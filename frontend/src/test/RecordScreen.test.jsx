@@ -13,18 +13,31 @@ describe("RecordScreen Component", () => {
     onToggleLang: vi.fn(),
     history: [],
     onClearHistory: vi.fn(),
+    farmUser: "Valley Crest Coop",
+    onSignOut: vi.fn(),
   };
 
   beforeEach(() => {
     vi.restoreAllMocks();
   });
 
-  it("renders idle state with branding, guidance, and instructions", () => {
+  it("renders idle state with lettermark, user greeting, and instructions", () => {
     render(<RecordScreen {...defaultProps} />);
-    expect(screen.getByText("FlockCare")).toBeInTheDocument();
-    expect(screen.getByText("Coop Health Check")).toBeInTheDocument();
-    expect(screen.getByText(/Hold your phone 1–2 meters from the flock/i)).toBeInTheDocument();
-    expect(screen.getByText("Tap to Start Recording")).toBeInTheDocument();
+    expect(screen.getByText("flockcare")).toBeInTheDocument();
+    expect(screen.getByText("Valley Crest Coop")).toBeInTheDocument();
+    expect(screen.getByText("Coop Health Screening")).toBeInTheDocument();
+    expect(screen.getByText(/Position your device 1–2 meters from the flock/i)).toBeInTheDocument();
+    expect(screen.getByText("Start Coop Screening")).toBeInTheDocument();
+    expect(screen.getByText("Log out")).toBeInTheDocument();
+  });
+
+  it("calls onSignOut when Log out button is clicked", () => {
+    const onSignOutMock = vi.fn();
+    render(<RecordScreen {...defaultProps} onSignOut={onSignOutMock} />);
+
+    const logOutBtn = screen.getByText("Log out");
+    fireEvent.click(logOutBtn);
+    expect(onSignOutMock).toHaveBeenCalledTimes(1);
   });
 
   it("renders error banner when an error message is passed", () => {

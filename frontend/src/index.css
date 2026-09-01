@@ -1,44 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap');
-
 :root {
-  --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-heading: 'Outfit', var(--font-main);
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-main: var(--font-sans);
+  --font-heading: var(--font-serif);
 
-  --color-bg: #0d1117;
-  --color-surface: #161b22;
-  --color-surface-card: #21262d;
-  --color-surface-hover: #30363d;
-  --color-border: #30363d;
-  --color-border-subtle: #21262d;
+  /* Hers-inspired Warm Neutral & Clinical Editorial Palette */
+  --color-bg: #FAF8F5;
+  --color-surface: #FFFFFF;
+  --color-surface-card: #FFFFFF;
+  --color-surface-hover: #F4F1EA;
+  --color-border: #E8E4DC;
+  --color-border-subtle: #F0ECE4;
+  --color-input-bg: #F7F5F0;
 
-  --color-text-primary: #f0f6fc;
-  --color-text-secondary: #8b949e;
-  --color-text-muted: #6e7681;
+  --color-text-primary: #141518;
+  --color-text-secondary: #5C626D;
+  --color-text-muted: #8E95A2;
 
-  --color-primary: #3b82f6;
-  --color-primary-hover: #2563eb;
-  --color-primary-glow: rgba(59, 130, 246, 0.35);
+  --color-primary: #141518; /* Classic solid dark pill */
+  --color-primary-hover: #26292E;
+  --color-accent-teal: #1B4D3E; /* Deep forest sage */
+  --color-accent-sage: #2E7D32;
 
-  --color-healthy: #10b981;
-  --color-healthy-glow: rgba(16, 185, 129, 0.3);
-  --color-healthy-surface: rgba(16, 185, 129, 0.1);
+  --color-healthy: #166534;
+  --color-healthy-surface: #F0FDF4;
+  --color-healthy-border: #BBF7D0;
 
-  --color-stress: #f59e0b;
-  --color-stress-glow: rgba(245, 158, 11, 0.3);
-  --color-stress-surface: rgba(245, 158, 11, 0.1);
+  --color-stress: #B45309;
+  --color-stress-surface: #FFFBEB;
+  --color-stress-border: #FDE68A;
 
-  --color-elevated: #ef4444;
-  --color-elevated-glow: rgba(239, 68, 68, 0.35);
-  --color-elevated-surface: rgba(239, 68, 68, 0.1);
+  --color-elevated: #B91C1C;
+  --color-elevated-surface: #FEF2F2;
+  --color-elevated-border: #FECACA;
 
   --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
   --radius-full: 9999px;
 
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
-  --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
-  --shadow-lg: 0 16px 40px rgba(0,0,0,0.6);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.08);
 }
 
 * {
@@ -49,7 +52,7 @@
 }
 
 body {
-  font-family: var(--font-main);
+  font-family: var(--font-sans);
   background-color: var(--color-bg);
   color: var(--color-text-primary);
   min-height: 100vh;
@@ -57,14 +60,13 @@ body {
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.08) 0px, transparent 50%);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
   width: 100%;
-  max-width: 480px;
+  max-width: 440px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -75,4 +77,9 @@ button {
   cursor: pointer;
   border: none;
   outline: none;
+  transition: all 0.2s ease;
+}
+
+input, select, textarea {
+  font-family: inherit;
 }

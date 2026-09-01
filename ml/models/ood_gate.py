@@ -158,5 +158,6 @@ def evaluate_window_ood(
         "mean_score": round(mean_score, 3),
         "max_score": round(max_score, 3),
         "threshold": round(threshold, 3),
+        "scores": [round(float(s), 3) for s in scores],
         "message": message,
     }
