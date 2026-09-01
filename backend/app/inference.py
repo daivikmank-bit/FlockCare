@@ -126,7 +126,7 @@ def _load_audio_bytes(raw_bytes: bytes) -> np.ndarray:
         y = y.mean(axis=1)  # downmix stereo to mono
 
     if sr != TARGET_SR:
-        y = librosa.resample(y, orig_sr=sr, target_sr=TARGET_SR)
+        y = librosa.resample(y, orig_sr=sr, target_sr=TARGET_SR, res_type="soxr_lq")
 
     return y.astype(np.float32)
 

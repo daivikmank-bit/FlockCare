@@ -93,7 +93,8 @@ async def analyze(file: UploadFile = File(...)):
         )
 
     try:
-        return analyze_audio_bytes(raw_bytes)
+        import asyncio
+        return await asyncio.to_thread(analyze_audio_bytes, raw_bytes)
     except ConversionError as e:
         raise HTTPException(status_code=400, detail=f"Could not decode audio: {e}")
     except (AudioTooShortError, InsufficientSignalError) as e:
