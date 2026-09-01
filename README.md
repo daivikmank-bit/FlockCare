@@ -1,3 +1,12 @@
+---
+title: FlockCare Bioacoustic API
+emoji: 🐔
+colorFrom: green
+colorTo: yellow
+sdk: docker
+app_port: 7860
+---
+
 # FlockCare
 
 *A stethoscope for the backyard flock — smartphone-only, AI-powered respiratory disease screening for smallholder poultry flocks.*
