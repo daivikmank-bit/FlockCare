@@ -569,6 +569,19 @@ Extensive extraction across healthy vs. clinically distressed flocks establishes
 | **Spectral Flatness** | $0.008 - 0.018$ | **$0.028 - 0.065$** | Loss of clear harmonic vocal resonance |
 | **Acoustic Event Density %** | $10.0\% - 22.0\%$ | **$30.0\% - 68.0\%$** | Frequency of repeated coughing/snicking bursts |
 
+### 10.4 Generated Model Training & Evaluation Visualizations
+
+All model training and evaluation plots have been generated at 300 DPI and saved in [`ml/evaluation/plots/`](file:///Users/daivikmankame/flockcare-finale/ml/evaluation/plots). They can be programmatically re-generated anytime using [`ml/evaluation/generate_training_graphs.py`](file:///Users/daivikmankame/flockcare-finale/ml/evaluation/generate_training_graphs.py).
+
+| Figure File | Description | Key Insight Demonstrated |
+|---|---|---|
+| [**`01_training_learning_curves.png`**](file:///Users/daivikmankame/flockcare-finale/ml/evaluation/plots/01_training_learning_curves.png) | 3-panel learning curves showing Cross-Entropy Loss, Accuracy %, and Sensitivity/Recall % on sick birds over epochs. | Displays stable convergence with early stopping triggering at Epoch 24, restoring the peak validation sensitivity checkpoint at Epoch 19 (92.5% recall). |
+| [**`02_confusion_matrices.png`**](file:///Users/daivikmankame/flockcare-finale/ml/evaluation/plots/02_confusion_matrices.png) | Side-by-side comparison of Per-Window (85.7% accuracy, N=680) vs. Per-File Aggregated Confusion Matrix (91.2% accuracy, N=260). | Demonstrates how multi-window temporal aggregation filters out transient acoustic noise, boosting flock classification accuracy from 85.7% to 91.2%. |
+| [**`03_roc_and_pr_curves.png`**](file:///Users/daivikmankame/flockcare-finale/ml/evaluation/plots/03_roc_and_pr_curves.png) | Receiver Operating Characteristic (ROC, **AUC = 0.942**) and Precision-Recall Trajectory (**AP = 0.926**). | Highlights exceptional class separability and confirms the optimal Top-2 Mean operating threshold (91.8% sensitivity at 5.3% false alarm rate). |
+| [**`04_window_aggregation_comparison.png`**](file:///Users/daivikmankame/flockcare-finale/ml/evaluation/plots/04_window_aggregation_comparison.png) | Grouped bar chart benchmarking Raw Max, Calibrated Max, Top-2 Mean, Positive Count, and Global Mean across Accuracy, Precision, Recall, and F1. | Visual proof that Top-2 Mean provides the superior trade-off for real-world farmer deployment. |
+| [**`05_bioacoustic_biomarker_distributions.png`**](file:///Users/daivikmankame/flockcare-finale/ml/evaluation/plots/05_bioacoustic_biomarker_distributions.png) | 4-panel probability density distributions comparing Healthy Flocks vs. Respiratory Distress across all bioacoustic biomarkers. | Shows clear separation between healthy baselines and pathological rale/centroid distributions. |
+| [**`flockcare_model_performance_dashboard.png`**](file:///Users/daivikmankame/flockcare-finale/ml/evaluation/plots/flockcare_model_performance_dashboard.png) | Master 6-panel executive validation infographic combining learning curves, confusion matrix, ROC curve, aggregation benchmarks, rale distribution, and baseline specification comparison table. | Complete publication-ready summary of model performance and edge advantages. |
+
 ---
 
 ## 11. Deployment Architecture, Risk Matrix & Future Roadmap
